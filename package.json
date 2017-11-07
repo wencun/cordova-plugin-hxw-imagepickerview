@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wencun/cordova-plugin-hxw-ocr.git"
+    "url": "https://github.com/wencun/cordova-plugin-hxw-imagepickerview.git"
   },
   "keywords": [
     "ecosystem:cordova",
