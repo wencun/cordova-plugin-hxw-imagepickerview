@@ -12,7 +12,7 @@
 
 `cordova plugin rm cordova-plugin-hxw-imagepickerview`
 
-## 银行卡扫描插件使用
+## IOS图片多张选择插件使用
 
 在需要使用插件的地方引入如下代码
 
