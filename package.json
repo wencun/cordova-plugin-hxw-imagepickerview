@@ -1,0 +1,21 @@
+{
+  "name": "YXWImagePickerView",
+  "version": "0.0.1",
+  "description": "OCR插件",
+  "cordova": {
+    "id": "cordova-plugin-hxw-imagepickerview",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wencun/cordova-plugin-hxw-ocr.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "author": "wencun",
+  "license": "ISC"
+}

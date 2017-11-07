@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-hxw-imagepickerview" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>HXWImagePickerView</name>
+	<js-module name="HXWImagePickerView" src="www/HXWImagePickerView.js">
+		<clobbers target="cordova.plugins.HXWImagePickerView"/>
+	</js-module>
+
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="HXWImagePickerView">
+				<param name="ios-package" value="HXWImagePickerView"/>
+			</feature>
+		</config-file>
+		
+		<config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+			<string>是否允许此APP使用相机？</string>
+		</config-file>
+
+		<config-file target="*-Info.plist" parent="CFBundleDevelopmentRegion">
+			<string>zh_CN</string>
+		</config-file>
+
+		<source-file src="src/ios/HXWImagePickerView.m"/>
+		
+		<header-file src="src/ios/Models/LGPhotoAssets.h"/>
+		<source-file src="src/ios/Models/LGPhotoAssets.m"/>
+        <header-file src="src/ios/Models/LGPhotoPickerDatas.h"/>
+        <source-file src="src/ios/Models/LGPhotoPickerDatas.m"/>
+        <header-file src="src/ios/Models/LGPhotoPickerGroup.h"/>
+        <source-file src="src/ios/Models/LGPhotoPickerGroup.m"/>
+        
+        <header-file src="src/ios/ViewControllers/LGPhotoPickerAssetsViewController.h"/>
+        <source-file src="src/ios/ViewControllers/LGPhotoPickerAssetsViewController.m"/>
+        <header-file src="src/ios/ViewControllers/LGPhotoPickerGroupViewController.h"/>
+        <source-file src="src/ios/ViewControllers/LGPhotoPickerGroupViewController.m"/>
+        <header-file src="src/ios/ViewControllers/LGPhotoPickerViewController.h"/>
+        <source-file src="src/ios/ViewControllers/LGPhotoPickerViewController.m"/>
+        
+        <header-file src="src/ios/Views/LGPhotoPickerCollectionView.h"/>
+        <source-file src="src/ios/Views/LGPhotoPickerCollectionView.m"/>
+        <header-file src="src/ios/Views/LGPhotoPickerCollectionViewCell.h"/>
+        <source-file src="src/ios/Views/LGPhotoPickerCollectionViewCell.m"/>
+        <header-file src="src/ios/Views/LGPhotoPickerFooterCollectionReusableView.h"/>
+        <source-file src="src/ios/Views/LGPhotoPickerFooterCollectionReusableView.m"/>
+        <header-file src="src/ios/Views/LGPhotoPickerGroupTableViewCell.h"/>
+        <source-file src="src/ios/Views/LGPhotoPickerGroupTableViewCell.m"/>
+        <header-file src="src/ios/Views/LGPhotoPickerImageView.h"/>
+        <source-file src="src/ios/Views/LGPhotoPickerImageView.m"/>
+        
+	</platform>
+</plugin>
