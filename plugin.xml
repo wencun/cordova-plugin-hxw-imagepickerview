@@ -22,30 +22,56 @@
 
 		<source-file src="src/ios/HXWImagePickerView.m"/>
 		
-		<header-file src="src/ios/Models/LGPhotoAssets.h"/>
-		<source-file src="src/ios/Models/LGPhotoAssets.m"/>
-        <header-file src="src/ios/Models/LGPhotoPickerDatas.h"/>
-        <source-file src="src/ios/Models/LGPhotoPickerDatas.m"/>
-        <header-file src="src/ios/Models/LGPhotoPickerGroup.h"/>
-        <source-file src="src/ios/Models/LGPhotoPickerGroup.m"/>
+        <!-- LGPhotoPicker -->
+		<header-file src="src/ios/LGPhotoPicker/Models/LGPhotoAssets.h"/>
+		<source-file src="src/ios/LGPhotoPicker/Models/LGPhotoAssets.m"/>
+        <header-file src="src/ios/LGPhotoPicker/Models/LGPhotoPickerDatas.h"/>
+        <source-file src="src/ios/LGPhotoPicker/Models/LGPhotoPickerDatas.m"/>
+        <header-file src="src/ios/LGPhotoPicker/Models/LGPhotoPickerGroup.h"/>
+        <source-file src="src/ios/LGPhotoPicker/Models/LGPhotoPickerGroup.m"/>
         
-        <header-file src="src/ios/ViewControllers/LGPhotoPickerAssetsViewController.h"/>
-        <source-file src="src/ios/ViewControllers/LGPhotoPickerAssetsViewController.m"/>
-        <header-file src="src/ios/ViewControllers/LGPhotoPickerGroupViewController.h"/>
-        <source-file src="src/ios/ViewControllers/LGPhotoPickerGroupViewController.m"/>
-        <header-file src="src/ios/ViewControllers/LGPhotoPickerViewController.h"/>
-        <source-file src="src/ios/ViewControllers/LGPhotoPickerViewController.m"/>
+        <header-file src="src/ios/LGPhotoPicker/ViewControllers/LGPhotoPickerAssetsViewController.h"/>
+        <source-file src="src/ios/LGPhotoPicker/ViewControllers/LGPhotoPickerAssetsViewController.m"/>
+        <header-file src="src/ios/LGPhotoPicker/ViewControllers/LGPhotoPickerGroupViewController.h"/>
+        <source-file src="src/ios/LGPhotoPicker/ViewControllers/LGPhotoPickerGroupViewController.m"/>
+        <header-file src="src/ios/LGPhotoPicker/ViewControllers/LGPhotoPickerViewController.h"/>
+        <source-file src="src/ios/LGPhotoPicker/ViewControllers/LGPhotoPickerViewController.m"/>
         
-        <header-file src="src/ios/Views/LGPhotoPickerCollectionView.h"/>
-        <source-file src="src/ios/Views/LGPhotoPickerCollectionView.m"/>
-        <header-file src="src/ios/Views/LGPhotoPickerCollectionViewCell.h"/>
-        <source-file src="src/ios/Views/LGPhotoPickerCollectionViewCell.m"/>
-        <header-file src="src/ios/Views/LGPhotoPickerFooterCollectionReusableView.h"/>
-        <source-file src="src/ios/Views/LGPhotoPickerFooterCollectionReusableView.m"/>
-        <header-file src="src/ios/Views/LGPhotoPickerGroupTableViewCell.h"/>
-        <source-file src="src/ios/Views/LGPhotoPickerGroupTableViewCell.m"/>
-        <header-file src="src/ios/Views/LGPhotoPickerImageView.h"/>
-        <source-file src="src/ios/Views/LGPhotoPickerImageView.m"/>
+        <header-file src="src/ios/LGPhotoPicker/Views/LGPhotoPickerCollectionView.h"/>
+        <source-file src="src/ios/LGPhotoPicker/Views/LGPhotoPickerCollectionView.m"/>
+        <header-file src="src/ios/LGPhotoPicker/Views/LGPhotoPickerCollectionViewCell.h"/>
+        <source-file src="src/ios/LGPhotoPicker/Views/LGPhotoPickerCollectionViewCell.m"/>
+        <header-file src="src/ios/LGPhotoPicker/Views/LGPhotoPickerFooterCollectionReusableView.h"/>
+        <source-file src="src/ios/LGPhotoPicker/Views/LGPhotoPickerFooterCollectionReusableView.m"/>
+        <header-file src="src/ios/LGPhotoPicker/Views/LGPhotoPickerGroupTableViewCell.h"/>
+        <source-file src="src/ios/LGPhotoPicker/Views/LGPhotoPickerGroupTableViewCell.m"/>
+        <header-file src="src/ios/LGPhotoPicker/Views/LGPhotoPickerImageView.h"/>
+        <source-file src="src/ios/LGPhotoPicker/Views/LGPhotoPickerImageView.m"/>
+        
+        <!-- LGPhotoBrowser -->
+        <header-file src="src/ios/LGPhotoBrowser/Models/LGPhotoPickerBrowserPhoto.h"/>
+        <source-file src="src/ios/LGPhotoBrowser/Models/LGPhotoPickerBrowserPhoto.m"/>
+        <header-file src="src/ios/LGPhotoBrowser/Models/LGPhotoRect.h"/>
+        <source-file src="src/ios/LGPhotoBrowser/Models/LGPhotoRect.m"/>
+        
+        <header-file src="src/ios/LGPhotoBrowser/ViewControllers/LGPhotoPickerBrowserViewController.h"/>
+        <source-file src="src/ios/LGPhotoBrowser/ViewControllers/LGPhotoPickerBrowserViewController.m"/>
+        
+        <header-file src="src/ios/LGPhotoBrowser/Views/LGImagePickerSelectView.h"/>
+        <source-file src="src/ios/LGPhotoBrowser/Views/LGImagePickerSelectView.m"/>
+        <header-file src="src/ios/LGPhotoBrowser/Views/LGPhotoPickerBrowserPhotoImageView.h"/>
+        <source-file src="src/ios/LGPhotoBrowser/Views/LGPhotoPickerBrowserPhotoImageView.m"/>
+        <header-file src="src/ios/LGPhotoBrowser/Views/LGPhotoPickerBrowserPhotoScrollView.h"/>
+        <source-file src="src/ios/LGPhotoBrowser/Views/LGPhotoPickerBrowserPhotoScrollView.m"/>
+        <header-file src="src/ios/LGPhotoBrowser/Views/LGPhotoPickerBrowserPhotoView.h"/>
+        <source-file src="src/ios/LGPhotoBrowser/Views/LGPhotoPickerBrowserPhotoView.m"/>
+        <header-file src="src/ios/LGPhotoBrowser/Views/LGPhotoPickerCustomToolBarView.h"/>
+        <source-file src="src/ios/LGPhotoBrowser/Views/LGPhotoPickerCustomToolBarView.m"/>
+        
+        <!-- Category -->
+        <header-file src="src/ios/Category/UIView+Layout.h"/>
+        <source-file src="src/ios/Category/UIView+Layout.m"/>
+        
         
         <header-file src="src/ios/LGPhoto.h"/>
         <header-file src="src/ios/LGPhotoPickerCommon.h"/>
