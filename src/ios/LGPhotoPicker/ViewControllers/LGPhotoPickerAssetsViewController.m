@@ -21,7 +21,7 @@ static CGFloat TOOLBAR_HEIGHT = 44;
 static NSString *const _cellIdentifier = @"cell";
 static NSString *const _footerIdentifier = @"FooterView";
 static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
-@interface LGPhotoPiLGPhotoPickerBrowserViewControllerckerAssetsViewController () <LGPhotoPickerCollectionViewDelegate,UICollectionViewDataSource,LGPhotoPickerBrowserViewControllerDataSource,LGPhotoPickerBrowserViewControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface LGPhotoPickerAssetsViewController () <LGPhotoPickerCollectionViewDelegate,UICollectionViewDataSource,LGPhotoPickerBrowserViewControllerDataSource,LGPhotoPickerBrowserViewControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 // View
 // 相片View
@@ -281,7 +281,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
     }
     
     __block NSMutableArray *assetsM = [NSMutableArray array];
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [[LGPhotoPickerDatas defaultPicker] getGroupPhotosWithGroup:self.assetsGroup finished:^(NSArray *assets) {

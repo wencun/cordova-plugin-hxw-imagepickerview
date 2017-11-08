@@ -7,10 +7,10 @@
 
 #import "LGPhotoPickerBrowserPhotoScrollView.h"
 #import "LGPhotoPickerDatas.h"
-#import "DACircularProgressView.h"
+//#import "DACircularProgressView.h"
 #import "LGPhotoPickerCommon.h"
 #import "LGPhotoRect.h"
-#import "UIImageView+WebCache.h"
+//#import "UIImageView+WebCache.h"
 
 
 #define ORIGINALBTN_TAG 9999
@@ -27,7 +27,7 @@
 }
 
 @property (nonatomic, assign) CGFloat                progress;
-@property (strong,nonatomic ) DACircularProgressView *progressView;
+//@property (strong,nonatomic ) DACircularProgressView *progressView;
 @property (nonatomic, assign) BOOL                   isLoadingDone;
 
 @end
@@ -70,21 +70,21 @@
         UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longGesture:)];
         [self addGestureRecognizer:longGesture];
         
-        DACircularProgressView *progressView = [[DACircularProgressView alloc] init];
-        progressView.frame = CGRectMake(0, 0, LGPickerProgressViewW, LGPickerProgressViewH);
-        progressView.center = CGPointMake([UIScreen mainScreen].bounds.size.width * 0.5, [UIScreen mainScreen].bounds.size.height * 0.5);
-        progressView.roundedCorners = YES;
-        if (iOS7gt) {
-            progressView.thicknessRatio = 0.1;
-            progressView.roundedCorners = NO;
-        } else {
-            progressView.thicknessRatio = 0.2;
-            progressView.roundedCorners = YES;
-        }
-        progressView.hidden = YES;
-        
-        [self addSubview:progressView];
-        self.progressView = progressView;
+        //        DACircularProgressView *progressView = [[DACircularProgressView alloc] init];
+        //        progressView.frame = CGRectMake(0, 0, LGPickerProgressViewW, LGPickerProgressViewH);
+        //        progressView.center = CGPointMake([UIScreen mainScreen].bounds.size.width * 0.5, [UIScreen mainScreen].bounds.size.height * 0.5);
+        //        progressView.roundedCorners = YES;
+        //        if (iOS7gt) {
+        //            progressView.thicknessRatio = 0.1;
+        //            progressView.roundedCorners = NO;
+        //        } else {
+        //            progressView.thicknessRatio = 0.2;
+        //            progressView.roundedCorners = YES;
+        //        }
+        //        progressView.hidden = YES;
+        //
+        //        [self addSubview:progressView];
+        //        self.progressView = progressView;
         
         //addObservers
         [self addObservers];
@@ -94,20 +94,20 @@
 
 #pragma mark - setProgress
 
-- (void)setProgress:(CGFloat)progress {
-    _progress = progress;
-    
-    self.progressView.hidden = NO;
-    if (progress == 0) return ;
-    if (progress / 1.0 != 1.0) {
-        [self.progressView setProgress:progress animated:YES];
-    }else{
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[self.progressView removeFromSuperview];
-			self.progressView = nil;
-		});
-    }
-}
+//- (void)setProgress:(CGFloat)progress {
+//    _progress = progress;
+//
+//    self.progressView.hidden = NO;
+//    if (progress == 0) return ;
+//    if (progress / 1.0 != 1.0) {
+//        [self.progressView setProgress:progress animated:YES];
+//    }else{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.progressView removeFromSuperview];
+//            self.progressView = nil;
+//        });
+//    }
+//}
 
 - (void)addObservers {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -138,7 +138,7 @@
 }
 
 - (void)imageDownloadDidFailAction {
-
+    
 }
 
 - (void)longGesture:(UILongPressGestureRecognizer *)gesture {
@@ -154,7 +154,7 @@
 - (void)setPhoto:(LGPhotoPickerBrowserPhoto *)photo {
     _photo = photo;
     
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     
     if (photo.photoPath.length) {
         //缓存路劲获取
@@ -192,22 +192,22 @@
             if (_photoImageView.image == nil) {
                 [self setProgress:0.01];
             }
-
+            
             // 网络URL
-            [_photoImageView sd_setImageWithURL:photo.photoURL placeholderImage:thumbImage options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                [self setProgress:(double)receivedSize / expectedSize];
-            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                [self setProgress:1.0];
-                self.isLoadingDone = YES;
-                if (image) {
-                    _photoImageView.image = image;
-                    [weakSelf displayImage];
-                }else{
-                    [_photoImageView removeScaleBigTap];
-                    _photoImageView.image = [UIImage imageNamed:@"icon_pic_break.png"];
-                    [weakSelf displayImage];
-                }
-            }];
+            //            [_photoImageView sd_setImageWithURL:photo.photoURL placeholderImage:thumbImage options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+            //                [self setProgress:(double)receivedSize / expectedSize];
+            //            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            //                [self setProgress:1.0];
+            //                self.isLoadingDone = YES;
+            //                if (image) {
+            //                    _photoImageView.image = image;
+            //                    [weakSelf displayImage];
+            //                }else{
+            //                    [_photoImageView removeScaleBigTap];
+            //                    _photoImageView.image = [UIImage imageNamed:@"icon_pic_break.png"];
+            //                    [weakSelf displayImage];
+            //                }
+            //            }];
         }
         
     }  else {
@@ -277,7 +277,7 @@
         CGFloat boundsAR = boundsSize.width / boundsSize.height;
         CGFloat imageAR = imageSize.width / imageSize.height;
         CGFloat xScale = boundsSize.width / imageSize.width;
-
+        
         if (ABS(boundsAR - imageAR) < 0.17) {
             zoomScale = xScale;
         }
@@ -391,7 +391,7 @@
 
 // Image View
 - (void)imageView:(UIImageView *)imageView doubleTapDetected:(UITouch *)touch {
-
+    
     CGSize imageViewSize = _photoImageView.frame.size;
     if (imageViewSize.height < imageViewSize.width) {//宽图特殊处理  宽图放大 高要变成屏幕高度
         [self handleImageViewDoubleTap:[touch locationInView:nil]];//locationInView:传nil 传gesture.view坐标不对
@@ -480,7 +480,7 @@
         CGFloat touchPointToImageViewX = point.x + self.contentOffset.x;
         CGFloat contentOffsetX = touchPointToImageViewX * photoImageViewWidth/imageViewSize.width - boundsSize.width;
         self.contentSize = _photoImageView.frame.size;
-   
+        
         if (contentOffsetX > photoImageViewWidth - boundsSize.width) {
             contentOffsetX = photoImageViewWidth - boundsSize.width;
         }
@@ -513,7 +513,7 @@
     zoomRect.size.width  = self.frame.size.width / scale;
     zoomRect.origin.x = center.x - (zoomRect.size.width / 2.0);
     zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
-
+    
     return zoomRect;
 }
 
@@ -527,3 +527,4 @@
 }
 
 @end
+

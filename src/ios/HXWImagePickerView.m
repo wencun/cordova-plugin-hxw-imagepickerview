@@ -13,7 +13,7 @@
 @property (nonatomic, copy) NSString *backImageName;
 @property (nonatomic, copy) NSString *callbackId;
 @property (nonatomic, strong) NSMutableDictionary *resultDict;
-@property (nonatomic,strong)CustomIDScannerUI *custBankVC;
+@property (nonatomic, assign) LGShowImageType showType;
 
 - (void)openImagePickerView:(CDVInvokedUrlCommand*)command;
 
@@ -55,7 +55,7 @@
     pickerVc.selectedAssetURL = array;
     pickerVc.delegate = self;
     //    pickerVc.nightMode = YES;//夜间模式
-    self.showType = style;
+    self.showType = LGShowImageTypeImagePicker;
     [pickerVc showPickerVc:self];
 }
 
@@ -168,3 +168,4 @@
 
 
 @end
+

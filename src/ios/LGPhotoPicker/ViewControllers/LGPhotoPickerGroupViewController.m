@@ -138,13 +138,14 @@
 	_assetsVc.maxCount = self.maxCount;
 	_assetsVc.nightMode = self.nightMode;
     [self.navigationController pushViewController:_assetsVc animated:YES];
+    
 }
 
 #pragma mark -<Images Datas>
 
 -(void)getImgs {
     LGPhotoPickerDatas *datas = [LGPhotoPickerDatas defaultPicker];
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     if (self.status == PickerViewShowStatusVideo){
         // 获取所有的图片URLs
         [datas getAllGroupWithVideos:^(NSArray *groups) {
