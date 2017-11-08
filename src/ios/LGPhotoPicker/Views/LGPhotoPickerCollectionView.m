@@ -80,12 +80,12 @@
     
     cellImgView.maskViewFlag = NO;
     
-//    CFAbsoluteTime startTime =CFAbsoluteTimeGetCurrent();
-//    for (NSInteger i = 0; i < self.selectAssets.count; i ++) {
-//        if ([((LGPhotoAssets *)self.selectAssets[i]).assetURL isEqual:asset.assetURL]) {
-//            cellImgView.maskViewFlag = YES;
-//        }
-//    }
+    //    CFAbsoluteTime startTime =CFAbsoluteTimeGetCurrent();
+    //    for (NSInteger i = 0; i < self.selectAssets.count; i ++) {
+    //        if ([((LGPhotoAssets *)self.selectAssets[i]).assetURL isEqual:asset.assetURL]) {
+    //            cellImgView.maskViewFlag = YES;
+    //        }
+    //    }
     if ([self.selectedAssetURL containsObject:asset.assetURL]) {
         [self.selectedAssetURL enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([url isEqual:asset.assetURL]) {
@@ -97,9 +97,9 @@
             }
         }];
     }
-//    CFAbsoluteTime linkTime = (CFAbsoluteTimeGetCurrent() - startTime);
-//    NSLog(@"Linked in %f ms", linkTime *1000.0);
-
+    //    CFAbsoluteTime linkTime = (CFAbsoluteTimeGetCurrent() - startTime);
+    //    NSLog(@"Linked in %f ms", linkTime *1000.0);
+    
 }
 /**
  *  每个cell右上角的选择按钮
@@ -182,12 +182,15 @@
 }
 
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"cellForItemAtIndexPath --- start");
+    //    NSLog(@"cellForItemAtIndexPath --- start");
     LGPhotoPickerCollectionViewCell *cell = [LGPhotoPickerCollectionViewCell cellWithCollectionView:collectionView cellForItemAtIndexPath:indexPath];
- 
+    
     [self setupPickerImageViewOnCell:cell AtIndex:indexPath];
     [self setupTickButtonOnCell:cell AtIndex:indexPath];
-    
+    // 赋值给上一个控制器,以便记录上次选择的照片
+    if (self.selectedAssetsBlock) {
+        self.selectedAssetsBlock(self.selectAssets);
+    }
     return cell;
 }
 
@@ -240,3 +243,4 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 @end
+

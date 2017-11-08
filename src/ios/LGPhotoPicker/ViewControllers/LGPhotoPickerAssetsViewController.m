@@ -221,6 +221,11 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
         
         collectionView.contentInset = UIEdgeInsetsMake(5, 0,TOOLBAR_HEIGHT, 0);
         collectionView.collectionViewDelegate = self;
+        __weak LGPhotoPickerAssetsViewController *weakSelf = self;
+        collectionView.selectedAssetsBlock = ^(NSMutableArray *selectedAssets){
+            //回传选择的照片，实现选择记忆
+            weakSelf.selectAssets = selectedAssets;
+        };
         [self.view insertSubview:_collectionView = collectionView belowSubview:self.toolBar];
         collectionView.frame = self.view.bounds;
     }
