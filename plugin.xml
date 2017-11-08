@@ -47,5 +47,8 @@
         <header-file src="src/ios/Views/LGPhotoPickerImageView.h"/>
         <source-file src="src/ios/Views/LGPhotoPickerImageView.m"/>
         
+        <header-file src="src/ios/LGPhoto.h"/>
+        <header-file src="src/ios/LGPhotoPickerCommon.h"/>
+        
 	</platform>
 </plugin>
