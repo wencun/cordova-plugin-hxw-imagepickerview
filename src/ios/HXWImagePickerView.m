@@ -26,8 +26,9 @@
     self.callbackId = command.callbackId;
     NSDictionary *dict  = [command argumentAtIndex:0 withDefault:nil];
     if (dict) {
-        NSUInteger maxCount = (long)dict[@"maxSelectCount"];
-        if (maxCount == 0) {
+        
+        NSInteger maxCount = 9;//[[NSString stringWithFormat:@"%@", dict[@"maxSelectCount"]] integerValue];
+        if (maxCount <= 0) {
             [self failedCallBack:@"参数错误"];
         }
         NSMutableArray *selectedAlAssetURL = dict[@"imgUuid"];
@@ -87,8 +88,9 @@
     NSMutableArray *imagePathArray = [NSMutableArray array];
     for (LGPhotoAssets *photo in assets) {
         CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
-        NSString *imgPath = [self saveImgToFileSystem:photo.originImage imgName:[NSString stringWithFormat:@"%@.png", @(startTime)]];
-        [imageKeyArray addObject:photo.assetURL];
+        NSString *imgName = [[NSString stringWithFormat:@"%f", startTime] stringByReplacingOccurrencesOfString:@"." withString:@""];
+        NSString *imgPath = [self saveImgToFileSystem:photo.originImage imgName:[NSString stringWithFormat:@"%@.png", imgName]];
+        [imageKeyArray addObject:[photo.assetURL absoluteString]];
         [imagePathArray addObject:imgPath];
         //缩略图
         //        [thumbImageArray addObject:photo.thumbImage];
@@ -165,3 +167,4 @@
 
 
 @end
+

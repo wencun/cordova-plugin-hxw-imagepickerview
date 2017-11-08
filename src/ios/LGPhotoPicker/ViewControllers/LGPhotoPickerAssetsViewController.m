@@ -139,16 +139,16 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
     pickerBrowser.delegate = self;
     pickerBrowser.dataSource = self;
     pickerBrowser.maxCount = self.maxCount;
-	pickerBrowser.nightMode = self.nightMode;
+    pickerBrowser.nightMode = self.nightMode;
     pickerBrowser.isOriginal = self.isOriginal;
     pickerBrowser.selectedAssets = [self.selectAssets mutableCopy];
     // 数据源可以不传，传photos数组 photos<里面是ZLPhotoPickerBrowserPhoto>
-//    pickerBrowser.photos = self.selectAssets;
+    //    pickerBrowser.photos = self.selectAssets;
     // 是否可以删除照片
     pickerBrowser.editing = NO;
     // 当前选中的值
     pickerBrowser.currentIndexPath = indexPath;    // 展示控制器
-//    [pickerBrowser showPickerVc:self];
+    //    [pickerBrowser showPickerVc:self];
     [self.navigationController presentViewController:pickerBrowser animated:YES completion:nil];
     
 }
@@ -183,7 +183,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 
 - (void)setTopShowPhotoPicker:(BOOL)topShowPhotoPicker{
     _topShowPhotoPicker = topShowPhotoPicker;
-
+    
     if (self.topShowPhotoPicker == YES) {
         NSMutableArray *reSortArray= [[NSMutableArray alloc] init];
         for (id obj in [self.collectionView.dataArray reverseObjectEnumerator]) {
@@ -222,7 +222,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
         collectionView.contentInset = UIEdgeInsetsMake(5, 0,TOOLBAR_HEIGHT, 0);
         collectionView.collectionViewDelegate = self;
         [self.view insertSubview:_collectionView = collectionView belowSubview:self.toolBar];
-		collectionView.frame = self.view.bounds;
+        collectionView.frame = self.view.bounds;
     }
     return _collectionView;
 }
@@ -241,7 +241,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 //        makeView.backgroundColor = [UIColor redColor];
 //        [self.view addSubview:makeView];
 //        self.makeView = makeView;
-//        
+//
 //    }
 //    return _makeView;
 //}
@@ -268,10 +268,10 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 
 #pragma mark - 创建右边取消按钮
 - (void)addNavBarCancelButton{
-	UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-																							target:self
-																							action:@selector(cancelBtnTouched)];
-	self.navigationItem.rightBarButtonItem = temporaryBarButtonItem;
+    UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                            target:self
+                                                                                            action:@selector(cancelBtnTouched)];
+    self.navigationItem.rightBarButtonItem = temporaryBarButtonItem;
 }
 
 #pragma mark 初始化所有的组
@@ -349,7 +349,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
     if (!_privateTempMaxCount) {
         _privateTempMaxCount = maxCount;
     }
-
+    
     if (self.selectAssets.count == maxCount) {
         maxCount = 0;
     }else if (self.selectPickerAssets.count - self.selectAssets.count > 0) {
@@ -360,12 +360,12 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 }
 
 - (void)setNightMode:(BOOL)nightMode {
-	_nightMode = nightMode;
-	if (nightMode == 1) {
-		self.view.backgroundColor = NIGHTMODE_COLOR;
-	} else {
-		self.view.backgroundColor = DAYMODE_COLOR;
-	}
+    _nightMode = nightMode;
+    if (nightMode == 1) {
+        self.view.backgroundColor = NIGHTMODE_COLOR;
+    } else {
+        self.view.backgroundColor = DAYMODE_COLOR;
+    }
 }
 
 - (void)setAssetsGroup:(LGPhotoPickerGroup *)assetsGroup {
@@ -376,7 +376,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
     self.title = assetsGroup.groupName;
     
     // 获取Assets
-//    [self setupAssets];
+    //    [self setupAssets];
 }
 
 #pragma mark - LGPhotoPickerCollectionViewDelegate
@@ -389,7 +389,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 
 //cell的右上角选择框被点击会调用
 - (void) pickerCollectionViewDidSelected:(LGPhotoPickerCollectionView *) pickerCollectionView deleteAsset:(LGPhotoAssets *)deleteAssets{
-
+    
     if (self.selectPickerAssets.count == 0){
         self.selectAssets = [NSMutableArray arrayWithArray:pickerCollectionView.selectAssets];
     } else if (deleteAssets == nil) {
@@ -403,13 +403,13 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
             }
         }
     }
-
+    
     [self updateToolbar];
 }
 
 - (void)updateToolbar
 {
-    NSInteger count = self.selectAssets.count;
+    NSInteger count = self.selectAssets.count==0 ? self.selectedAssetURL.count : self.selectAssets.count;
     self.sendBtn.enabled = (count > 0);
     self.previewBtn.enabled = (count > 0);
     NSString *title = [NSString stringWithFormat:@"发送(%ld)",(long)count];
@@ -445,7 +445,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
             imageView.image = (UIImage *)self.selectAssets[indexPath.item];
         }
     }
-
+    
     return cell;
 }
 
@@ -511,9 +511,10 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void) sendBtnTouched {
-	[[NSNotificationCenter defaultCenter] postNotificationName:PICKER_TAKE_DONE object:nil userInfo:@{@"selectAssets":self.selectAssets,@"isOriginal":@(self.isOriginal)}];
-	NSLog(@"%@",@(self.isOriginal));
+    [[NSNotificationCenter defaultCenter] postNotificationName:PICKER_TAKE_DONE object:nil userInfo:@{@"selectAssets":self.selectAssets,@"isOriginal":@(self.isOriginal)}];
+    NSLog(@"%@",@(self.isOriginal));
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 @end
+

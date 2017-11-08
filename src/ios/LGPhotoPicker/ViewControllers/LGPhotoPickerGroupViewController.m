@@ -54,9 +54,9 @@
         [tableView registerClass:[LGPhotoPickerGroupTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGPhotoPickerGroupTableViewCell class])];
         [self.view addSubview:tableView];
         self.tableView = tableView;
-		self.tableView.frame = self.view.bounds;
-		self.tableView.backgroundColor = [UIColor clearColor];
-		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.tableView.frame = self.view.bounds;
+        self.tableView.backgroundColor = [UIColor clearColor];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return _tableView;
 }
@@ -92,8 +92,8 @@
 #pragma mark - 创建右边取消按钮
 - (void)addNavBarCancelButton {
     UIBarButtonItem *temporaryBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                             target:self
-                             action:@selector(cancelBtnTouched)];
+                                                                                            target:self
+                                                                                            action:@selector(cancelBtnTouched)];
     self.navigationItem.rightBarButtonItem = temporaryBarButtonItem;
 }
 
@@ -105,7 +105,7 @@
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     LGPhotoPickerGroupTableViewCell *cell = (LGPhotoPickerGroupTableViewCell *)[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGPhotoPickerGroupTableViewCell class])];
-	cell.backgroundColor = [UIColor colorWithWhite:1 alpha:.1f];
+    cell.backgroundColor = [UIColor colorWithWhite:1 alpha:.1f];
     
     if (cell == nil){
         cell = [[LGPhotoPickerGroupTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LGPhotoPickerGroupTableViewCell"];
@@ -126,17 +126,19 @@
     self.selectGroupURL = [[group.group valueForProperty:ALAssetsGroupPropertyURL] absoluteString];
     
     _assetsVc = [[LGPhotoPickerAssetsViewController alloc] init];
-	__weak LGPhotoPickerGroupViewController *weakSelf = self;
+    __weak LGPhotoPickerGroupViewController *weakSelf = self;
     _assetsVc.selectedAssetsBlock = ^(NSMutableArray *selectedAssets){
         //回传选择的照片，实现选择记忆
         weakSelf.selectAsstes = selectedAssets;
     };
-    _assetsVc.selectPickerAssets = self.selectAsstes;
+    //这行一定在下行代码之前，先设置值在更新
     _assetsVc.selectedAssetURL = self.selectedAssetURL;
+    _assetsVc.selectPickerAssets = self.selectAsstes;
+    
     _assetsVc.assetsGroup = group;
     _assetsVc.topShowPhotoPicker = self.topShowPhotoPicker;
-	_assetsVc.maxCount = self.maxCount;
-	_assetsVc.nightMode = self.nightMode;
+    _assetsVc.maxCount = self.maxCount;
+    _assetsVc.nightMode = self.nightMode;
     [self.navigationController pushViewController:_assetsVc animated:YES];
     
 }
@@ -194,8 +196,8 @@
 
 - (void)setupAssetsVCWithGroup:(LGPhotoPickerGroup *)group {
     _assetsVc = [[LGPhotoPickerAssetsViewController alloc] initWithShowType:self.showType];
-	__weak LGPhotoPickerGroupViewController *weakSelf = self;
-	_assetsVc.selectedAssetsBlock = ^(NSMutableArray *selectedAssets){
+    __weak LGPhotoPickerGroupViewController *weakSelf = self;
+    _assetsVc.selectedAssetsBlock = ^(NSMutableArray *selectedAssets){
         //回传选择的照片，实现选择记忆
         weakSelf.selectAsstes = [selectedAssets copy];
     };
@@ -203,7 +205,7 @@
     _assetsVc.assetsGroup = group;
     _assetsVc.topShowPhotoPicker = self.topShowPhotoPicker;
     _assetsVc.maxCount = self.maxCount;
-	_assetsVc.nightMode = self.nightMode;
+    _assetsVc.nightMode = self.nightMode;
     [self.navigationController pushViewController:_assetsVc animated:NO];
 }
 
@@ -216,15 +218,16 @@
 #pragma mark -<setters>
 
 - (void)setNightMode:(BOOL)nightMode {
-	_nightMode = nightMode;
-	if (_assetsVc) {
-		[_assetsVc setNightMode:nightMode];
-	}
-	if (nightMode == YES) {
-		self.view.backgroundColor = NIGHTMODE_COLOR;
-	} else {
-		self.view.backgroundColor = DAYMODE_COLOR;
-	}
+    _nightMode = nightMode;
+    if (_assetsVc) {
+        [_assetsVc setNightMode:nightMode];
+    }
+    if (nightMode == YES) {
+        self.view.backgroundColor = NIGHTMODE_COLOR;
+    } else {
+        self.view.backgroundColor = DAYMODE_COLOR;
+    }
 }
 
 @end
+
