@@ -71,7 +71,12 @@
         <!-- Category -->
         <header-file src="src/ios/Category/UIView+Layout.h"/>
         <source-file src="src/ios/Category/UIView+Layout.m"/>
-        
+        <!-- image -->
+        <resource-file src="src/ios/image/btn_back_imagePicker@2x.png" target="/" />
+        <resource-file src="src/ios/image/checkbox_pic_non@2x.png" target="/" />
+        <resource-file src="src/ios/image/checkbox_pic_non2@2x.png" target="/" />
+        <resource-file src="src/ios/image/checkbox_pic@2x.png" target="/" />
+        <resource-file src="src/ios/image/checkbox_pic2@2x.png" target="/" />
         
         <header-file src="src/ios/LGPhoto.h"/>
         <header-file src="src/ios/LGPhotoPickerCommon.h"/>

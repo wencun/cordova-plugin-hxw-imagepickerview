@@ -4,7 +4,7 @@
 #import "LGPhoto.h"
 #define HEADER_HEIGHT 100
 
-@interface HXWImagePickerView : CDVPlugin <LGPhotoPickerViewControllerDelegate,LGPhotoPickerBrowserViewControllerDataSource,LGPhotoPickerBrowserViewControllerDelegate, UITableViewDataSource,UITableViewDelegate> {
+@interface HXWImagePickerView : CDVPlugin <LGPhotoPickerViewControllerDelegate> {
     
 }
 
@@ -13,7 +13,7 @@
 @property (nonatomic, copy) NSString *backImageName;
 @property (nonatomic, copy) NSString *callbackId;
 @property (nonatomic, strong) NSMutableDictionary *resultDict;
-@property (nonatomic, assign) LGShowImageType showType;
+//@property (nonatomic, assign) LGShowImageType showType;
 
 - (void)openImagePickerView:(CDVInvokedUrlCommand*)command;
 
@@ -26,37 +26,34 @@
     self.callbackId = command.callbackId;
     NSDictionary *dict  = [command argumentAtIndex:0 withDefault:nil];
     if (dict) {
-        NSUInteger maxCount = dict[@"maxSelectCount"];
-        if (maxCount<0) {
+        NSUInteger maxCount = (long)dict[@"maxSelectCount"];
+        if (maxCount == 0) {
             [self failedCallBack:@"参数错误"];
         }
         NSMutableArray *selectedAlAssetURL = dict[@"imgUuid"];
         
         _resultDict = [NSMutableDictionary dictionary];
         
-        [self startSelectedImage];
+        [self startSelectedImageMaxCount:maxCount selectedImageId:selectedAlAssetURL];
     } else {
         [self failedCallBack:@"参数错误"];
     }
 }
 
-- (void)startSelectedImage{
-    NSURL *url1 = [NSURL URLWithString:@"assets-library://asset/asset.PNG?id=9E434145-361C-4768-9F85-34A58AF4DE63&ext=PNG"];
-    NSURL *url2 = [NSURL URLWithString:@"assets-library://asset/asset.JPG?id=FB59F8C0-87EC-4318-9E35-1E9D5018C379&ext=JPG"];
+- (void)startSelectedImageMaxCount:(NSUInteger)maxCount selectedImageId:(NSMutableArray *)selectedAlAssetURL{
     NSMutableArray *array = [NSMutableArray array];
     
-    [array addObject:url1];
-    [array addObject:url2];
-    
+    for (NSString *urlString in selectedAlAssetURL) {
+        [array addObject:[NSURL URLWithString:urlString]];
+    }
     LGPhotoPickerViewController *pickerVc = [[LGPhotoPickerViewController alloc] initWithShowType:LGShowImageTypeImagePicker];
     pickerVc.status = PickerViewShowStatusCameraRoll;
-    pickerVc.maxCount = 1;   // 最多能选9张图片
-    //    pickerVc.selectPickers = array;
+    pickerVc.maxCount = maxCount;   // 最多能选maxCount张图片
     pickerVc.selectedAssetURL = array;
     pickerVc.delegate = self;
     //    pickerVc.nightMode = YES;//夜间模式
-    self.showType = LGShowImageTypeImagePicker;
-    [pickerVc showPickerVc:self];
+    //    self.showType = LGShowImageTypeImagePicker;
+    [pickerVc showPickerVc:self.viewController];
 }
 
 - (void)successCallBack:(NSDictionary *)cardDic {
@@ -168,4 +165,3 @@
 
 
 @end
-
