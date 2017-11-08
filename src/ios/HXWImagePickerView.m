@@ -34,12 +34,30 @@
         
         _resultDict = [NSMutableDictionary dictionary];
         
-        [self startScanNav];
+        [self startSelectedImage];
     } else {
         [self failedCallBack:@"参数错误"];
     }
 }
 
+- (void)startSelectedImage{
+    NSURL *url1 = [NSURL URLWithString:@"assets-library://asset/asset.PNG?id=9E434145-361C-4768-9F85-34A58AF4DE63&ext=PNG"];
+    NSURL *url2 = [NSURL URLWithString:@"assets-library://asset/asset.JPG?id=FB59F8C0-87EC-4318-9E35-1E9D5018C379&ext=JPG"];
+    NSMutableArray *array = [NSMutableArray array];
+    
+    [array addObject:url1];
+    [array addObject:url2];
+    
+    LGPhotoPickerViewController *pickerVc = [[LGPhotoPickerViewController alloc] initWithShowType:LGShowImageTypeImagePicker];
+    pickerVc.status = PickerViewShowStatusCameraRoll;
+    pickerVc.maxCount = 1;   // 最多能选9张图片
+    //    pickerVc.selectPickers = array;
+    pickerVc.selectedAssetURL = array;
+    pickerVc.delegate = self;
+    //    pickerVc.nightMode = YES;//夜间模式
+    self.showType = style;
+    [pickerVc showPickerVc:self];
+}
 
 - (void)successCallBack:(NSDictionary *)cardDic {
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:cardDic];
