@@ -37,6 +37,8 @@ typedef NS_ENUM(NSUInteger, LGPickerCollectionViewShowOrderStatus){
 @property (nonatomic , strong) NSMutableArray<__kindof LGPhotoAssets*> *selectAssets;
 // 记录选中值的URL（相当于key）可以根据传过来的这个key来获取选中的
 @property (strong,nonatomic) NSMutableArray *selectedAssetURL;
+
+@property (nonatomic, copy) void(^selectedAssetsBlock)(NSMutableArray *selectedAssets);
 // 最后保存的一次图片
 @property (strong,nonatomic  ) NSMutableArray *lastDataArray;
 // delegate

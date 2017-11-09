@@ -2,15 +2,12 @@
 
 #import <Cordova/CDV.h>
 #import "LGPhoto.h"
+#import "SVProgressHUD.h"
 #define HEADER_HEIGHT 100
 
 @interface HXWImagePickerView : CDVPlugin <LGPhotoPickerViewControllerDelegate> {
     
 }
-
-@property (nonatomic, copy) NSString *detectedImageName;
-@property (nonatomic, copy) NSString *faceImageName;
-@property (nonatomic, copy) NSString *backImageName;
 @property (nonatomic, copy) NSString *callbackId;
 @property (nonatomic, strong) NSMutableDictionary *resultDict;
 //@property (nonatomic, assign) LGShowImageType showType;
@@ -27,7 +24,7 @@
     NSDictionary *dict  = [command argumentAtIndex:0 withDefault:nil];
     if (dict) {
         
-        NSInteger maxCount = 9;//[[NSString stringWithFormat:@"%@", dict[@"maxSelectCount"]] integerValue];
+        NSInteger maxCount = [[NSString stringWithFormat:@"%@", dict[@"maxSelectCount"]] integerValue];
         if (maxCount <= 0) {
             [self failedCallBack:@"参数错误"];
         }
@@ -52,7 +49,7 @@
     pickerVc.maxCount = maxCount;   // 最多能选maxCount张图片
     pickerVc.selectedAssetURL = array;
     pickerVc.delegate = self;
-    //    pickerVc.nightMode = YES;//夜间模式
+    //        pickerVc.nightMode = YES;//夜间模式
     //    self.showType = LGShowImageTypeImagePicker;
     [pickerVc showPickerVc:self.viewController];
 }
@@ -70,14 +67,15 @@
 #pragma mark - STIDCardScannerDelegate
 
 - (void)didCancel {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.viewController dismissViewControllerAnimated:YES completion:nil];
-    });
+    //    dispatch_async(dispatch_get_main_queue(), ^{
+    [self.viewController dismissViewControllerAnimated:YES completion:nil];
+    //    });
 }
 
 #pragma mark - LGPhotoPickerViewControllerDelegate
 
 - (void)pickerViewControllerDoneAsstes:(NSArray *)assets isOriginal:(BOOL)original{
+    [SVProgressHUD showInfoWithStatus:@"图片正在处理中..."];
     /*
      //assets的元素是LGPhotoAssets对象，获取image方法如下:
      NSMutableArray *thumbImageArray = [NSMutableArray array];
@@ -89,7 +87,10 @@
     for (LGPhotoAssets *photo in assets) {
         CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
         NSString *imgName = [[NSString stringWithFormat:@"%f", startTime] stringByReplacingOccurrencesOfString:@"." withString:@""];
+        //        CFAbsoluteTime statTime = CFAbsoluteTimeGetCurrent();
         NSString *imgPath = [self saveImgToFileSystem:photo.originImage imgName:[NSString stringWithFormat:@"%@.png", imgName]];
+        //        CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent() - statTime;
+        //        NSLog(@"时间：%f, path:%@", endTime * 1000, imgPath);
         [imageKeyArray addObject:[photo.assetURL absoluteString]];
         [imagePathArray addObject:imgPath];
         //缩略图
@@ -102,13 +103,15 @@
     [_resultDict setObject:imageKeyArray forKey:@"imgUuid"];
     [_resultDict setObject:imagePathArray forKey:@"imgPath"];
     [self successCallBack:_resultDict];
+    [SVProgressHUD dismiss];
     [self didCancel];
+    
 }
 
 // 压缩 -> 保存 -> 返回路径
 - (NSString*)saveImgToFileSystem:(UIImage*)img imgName:(NSString*)imgName {
     // 1.压缩照片
-    NSData *imgData = [self compressImage:img toByte:80*1024];
+    NSData *imgData = [self compressImage:img toByte:500*1024];
     // 2.创建文件夹
     NSString *tempPath = NSTemporaryDirectory();
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -121,6 +124,7 @@
     // 3.保存文件
     BOOL ret = [imgData writeToFile:tempPath atomically:YES];
     if (ret) {
+        //        UIImage *img = [UIImage imageWithContentsOfFile:tempPath];
         return tempPath;
     } else {
         return @"";
