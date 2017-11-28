@@ -17,7 +17,7 @@
 // 记录选中的值
 @property (nonatomic, strong) NSMutableArray *selectAsstes;
 // 记录选中值的URL（相当于key）可以根据传过来的这个key来获取选中的
-@property (strong,nonatomic) NSArray *selectedAssetURL;
+@property (strong,nonatomic) NSMutableArray *selectedAssetURL;
 // 置顶展示图片
 @property (nonatomic, assign) BOOL topShowPhotoPicker;
 // 夜间模式

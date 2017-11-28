@@ -25,11 +25,13 @@
 // 需要记录选中的值的数据
 @property (nonatomic, strong) NSArray *selectPickerAssets;
 // 记录选中值的URL（相当于key）可以根据传过来的这个key来获取选中的
-@property (strong,nonatomic) NSArray *selectedAssetURL;
+@property (strong,nonatomic) NSMutableArray *selectedAssetURL;
 // 置顶展示图片
 @property (nonatomic, assign) BOOL topShowPhotoPicker;
 
 @property (nonatomic, copy) void(^selectedAssetsBlock)(NSMutableArray *selectedAssets);
+// 记录选中值的URL（相当于key）可以根据传过来的这个key来获取选中的
+@property (copy, nonatomic) void(^selectedAssetsURLBlock)(NSMutableArray *selectedAssetURL);
 
 - (instancetype)initWithShowType:(LGShowImageType)showType;
 

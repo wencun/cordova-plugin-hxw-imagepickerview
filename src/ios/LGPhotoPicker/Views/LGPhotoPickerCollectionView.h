@@ -38,13 +38,15 @@ typedef NS_ENUM(NSUInteger, LGPickerCollectionViewShowOrderStatus){
 // 记录选中值的URL（相当于key）可以根据传过来的这个key来获取选中的
 @property (strong,nonatomic) NSMutableArray *selectedAssetURL;
 
-@property (nonatomic, copy) void(^selectedAssetsBlock)(NSMutableArray *selectedAssets);
+//@property (nonatomic, copy) void(^selectedAssetsBlock)(NSMutableArray *selectedAssets);
 // 最后保存的一次图片
 @property (strong,nonatomic  ) NSMutableArray *lastDataArray;
 // delegate
 @property (nonatomic , weak) id <LGPhotoPickerCollectionViewDelegate> collectionViewDelegate;
 // 限制最大数
 @property (nonatomic , assign) NSInteger maxCount;
+// 限制最大数
+@property (nonatomic , assign) NSInteger privateMaxCount;
 // 置顶展示图片
 @property (assign,nonatomic  ) BOOL      topShowPhotoPicker;
 // 记录选中的值

@@ -146,15 +146,17 @@
         // 1 判断图片数超过最大数或者小于0
         NSUInteger maxCount = (self.maxCount < 0) ? KPhotoShowMaxCount :  self.maxCount;
         if (self.selectAssets.count >= maxCount) {
-            NSString *format = [NSString stringWithFormat:@"最多只能选择%zd张图片",maxCount];
-            if (maxCount == 0) {
-                format = [NSString stringWithFormat:@"您最多只能选择9张图片"];
-            }
+            NSString *format = [NSString stringWithFormat:@"最多只能选择%zd张图片",self.privateMaxCount];
+//            if (maxCount == 0) {
+//                format = [NSString stringWithFormat:@""];
+//            }
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提醒" message:format delegate:self cancelButtonTitle:nil otherButtonTitles:@"好的", nil];
             [alertView show];
             return;
         }
-        
+        if (!self.selectedAssetURL) {
+            self.selectedAssetURL = [NSMutableArray array];
+        }
         [self.selectAssets addObject:asset];
         [self.selectedAssetURL addObject:asset.assetURL];
         [self.lastDataArray addObject:asset];
@@ -188,9 +190,9 @@
     [self setupPickerImageViewOnCell:cell AtIndex:indexPath];
     [self setupTickButtonOnCell:cell AtIndex:indexPath];
     // 赋值给上一个控制器,以便记录上次选择的照片
-    if (self.selectedAssetsBlock) {
-        self.selectedAssetsBlock(self.selectAssets);
-    }
+//    if (self.selectedAssetsBlock) {
+//        self.selectedAssetsBlock(self.selectAssets);
+//    }
     return cell;
 }
 

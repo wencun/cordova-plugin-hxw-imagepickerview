@@ -131,6 +131,10 @@
         //回传选择的照片，实现选择记忆
         weakSelf.selectAsstes = selectedAssets;
     };
+    _assetsVc.selectedAssetsURLBlock = ^(NSMutableArray *selectedAssetURL) {
+        //回传选择的照片，实现选择记忆
+        weakSelf.selectedAssetURL = selectedAssetURL;
+    };
     //这行一定在下行代码之前，先设置值在更新
     _assetsVc.selectedAssetURL = self.selectedAssetURL;
     _assetsVc.selectPickerAssets = self.selectAsstes;
@@ -201,6 +205,11 @@
         //回传选择的照片，实现选择记忆
         weakSelf.selectAsstes = [selectedAssets copy];
     };
+    _assetsVc.selectedAssetsURLBlock = ^(NSMutableArray *selectedAssetURL) {
+        //回传选择的照片，实现选择记忆
+        weakSelf.selectedAssetURL = [selectedAssetURL copy];
+    };
+    _assetsVc.selectedAssetURL = self.selectedAssetURL;
     _assetsVc.selectPickerAssets = self.selectAsstes;
     _assetsVc.assetsGroup = group;
     _assetsVc.topShowPhotoPicker = self.topShowPhotoPicker;

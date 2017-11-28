@@ -56,12 +56,16 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
     if (self.selectedAssetsBlock) {
         self.selectedAssetsBlock(self.selectAssets);
     }
+    if (self.selectedAssetsURLBlock) {
+        self.selectedAssetsURLBlock(_selectedAssetURL);
+    }
 }
 
 - (instancetype)initWithShowType:(LGShowImageType)showType{
     self = [super init];
     if (self) {
         self.showType = showType;
+        _selectedAssetURL = [NSMutableArray array];
     }
     return self;
 }
@@ -176,9 +180,9 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
     [self updateToolbar];
 }
 
-- (void)setSelectedAssetURL:(NSArray *)selectedAssetURL{
-    _selectedAssetURL = selectedAssetURL;
-    self.collectionView.selectedAssetURL = self.selectedAssetURL;
+- (void)setSelectedAssetURL:(NSMutableArray *)selectedAssetURL{
+    _selectedAssetURL = [selectedAssetURL mutableCopy];
+    self.collectionView.selectedAssetURL = _selectedAssetURL;
 }
 
 - (void)setTopShowPhotoPicker:(BOOL)topShowPhotoPicker{
@@ -221,11 +225,15 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
         
         collectionView.contentInset = UIEdgeInsetsMake(5, 0,TOOLBAR_HEIGHT, 0);
         collectionView.collectionViewDelegate = self;
-        __weak LGPhotoPickerAssetsViewController *weakSelf = self;
-        collectionView.selectedAssetsBlock = ^(NSMutableArray *selectedAssets){
-            //回传选择的照片，实现选择记忆
-            weakSelf.selectAssets = selectedAssets;
-        };
+//        __weak LGPhotoPickerAssetsViewController *weakSelf = self;
+//        collectionView.selectedAssetsBlock = ^(NSMutableArray *selectedAssets){
+//            //回传选择的照片，实现选择记忆
+//            weakSelf.selectAssets = selectedAssets;
+//        };
+//        collectionView.selectedAssetsURLBlock = ^(NSMutableArray *selectedAssetsURL) {
+//            //回传选择的照片，实现选择记忆
+//            weakSelf.selectedAssetURL = selectedAssetsURL;
+//        };
         [self.view insertSubview:_collectionView = collectionView belowSubview:self.toolBar];
         collectionView.frame = self.view.bounds;
     }
@@ -362,6 +370,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
     }
     
     self.collectionView.maxCount = maxCount;
+    self.collectionView.privateMaxCount = _privateTempMaxCount;//存储最初传过来可选张数
 }
 
 - (void)setNightMode:(BOOL)nightMode {
@@ -395,26 +404,41 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 //cell的右上角选择框被点击会调用
 - (void) pickerCollectionViewDidSelected:(LGPhotoPickerCollectionView *) pickerCollectionView deleteAsset:(LGPhotoAssets *)deleteAssets{
     
+//    if (!self.selectedAssetURL) {
+//        self.selectedAssetURL = [NSMutableArray array];
+//    }
     if (self.selectPickerAssets.count == 0){
-        self.selectAssets = [NSMutableArray arrayWithArray:pickerCollectionView.selectAssets];
+        NSMutableArray *selectAssetArray = pickerCollectionView.selectAssets;
+        self.selectPickerAssets = selectAssetArray;//第一次进入没有赋值，再次不要进入这个判断
+        self.selectAssets = [NSMutableArray arrayWithArray:selectAssetArray];
+        self.selectedAssetURL = [NSMutableArray arrayWithArray:pickerCollectionView.selectedAssetURL];
     } else if (deleteAssets == nil) {
-        [self.selectAssets addObject:[pickerCollectionView.selectAssets lastObject]];
+        if (![self.selectAssets containsObject:[pickerCollectionView.selectAssets lastObject]]) {
+            [self.selectAssets addObject:[pickerCollectionView.selectAssets lastObject]];
+        }
+        if (![self.selectedAssetURL containsObject:[pickerCollectionView.selectedAssetURL lastObject]]) {
+            [self.selectedAssetURL addObject:[pickerCollectionView.selectedAssetURL lastObject]];
+        }
     } else if(deleteAssets) { //取消所选的照片
         //根据url删除对象
         NSArray *arr = [self.selectAssets copy];
         for (LGPhotoAssets *selectAsset in arr) {
             if ([selectAsset.assetURL isEqual:deleteAssets.assetURL]) {
                 [self.selectAssets removeObject:selectAsset];
+                [self.selectedAssetURL removeObject:selectAsset.assetURL];
             }
         }
     }
-    
+//    [self.selectedAssetURL removeAllObjects];
+//    [self.selectAssets enumerateObjectsUsingBlock:^(LGPhotoAssets *asset, NSUInteger idx, BOOL * _Nonnull stop) {
+//        [self.selectedAssetURL addObject:asset.assetURL];
+//    }];
     [self updateToolbar];
 }
 
 - (void)updateToolbar
 {
-    NSInteger count = self.selectAssets.count==0 ? self.selectedAssetURL.count : self.selectAssets.count;
+    NSInteger count = self.selectedAssetURL.count;//self.selectAssets.count;//==0 ? self.selectedAssetURL.count : self.selectAssets.count;
     self.sendBtn.enabled = (count > 0);
     self.previewBtn.enabled = (count > 0);
     NSString *title = [NSString stringWithFormat:@"发送(%ld)",(long)count];
