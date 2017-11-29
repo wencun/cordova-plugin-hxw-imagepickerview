@@ -145,7 +145,7 @@
     }else{
         // 1 判断图片数超过最大数或者小于0
         NSUInteger maxCount = (self.maxCount < 0) ? KPhotoShowMaxCount :  self.maxCount;
-        if (self.selectAssets.count >= maxCount) {
+        if (self.selectedAssetURL.count >= maxCount) {
             NSString *format = [NSString stringWithFormat:@"最多只能选择%zd张图片",self.privateMaxCount];
 //            if (maxCount == 0) {
 //                format = [NSString stringWithFormat:@""];
