@@ -81,7 +81,7 @@
         <resource-file src="src/ios/image/checkbox_pic@2x.png" target="/" />
         <resource-file src="src/ios/image/checkbox_pic2@2x.png" target="/" />
         
-        <!-- Category -->
+        <!-- SVProgressHUD start -->
         <header-file src="src/ios/SVProgressHUD/SVIndefiniteAnimatedView.h"/>
         <source-file src="src/ios/SVProgressHUD/SVIndefiniteAnimatedView.m"/>
         <header-file src="src/ios/SVProgressHUD/SVProgressAnimatedView.h"/>
@@ -92,6 +92,8 @@
         <source-file src="src/ios/SVProgressHUD/SVRadialGradientLayer.m"/>
         <header-file src="src/ios/SVProgressHUD/SVProgressHUD-Prefix.pch"/>
         <resource-file src="src/ios/SVProgressHUD/SVProgressHUD.bundle" target="/" />
+        <!-- SVProgressHUD end -->
+        
         
         <framework src="QuartzCore.framework" />
         
