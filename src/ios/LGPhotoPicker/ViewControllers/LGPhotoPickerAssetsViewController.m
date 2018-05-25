@@ -277,6 +277,8 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.collectionView reloadData];
+    //隐藏底部工具栏
+    self.toolBar.hidden = YES;
 }
 
 #pragma mark - 创建右边取消按钮
@@ -434,6 +436,7 @@ static NSString *const _identifier = @"toolBarThumbCollectionViewCell";
 //        [self.selectedAssetURL addObject:asset.assetURL];
 //    }];
     [self updateToolbar];
+    [self sendBtnTouched];
 }
 
 - (void)updateToolbar

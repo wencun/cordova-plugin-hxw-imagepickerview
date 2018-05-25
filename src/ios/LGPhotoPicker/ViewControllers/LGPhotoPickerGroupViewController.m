@@ -18,6 +18,7 @@
 #import "LGPhotoPickerGroupTableViewCell.h"
 #import "LGPhotoPickerAssetsViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
 
 @interface LGPhotoPickerGroupViewController () <UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, weak) LGPhotoPickerAssetsViewController *collectionVc;
@@ -69,20 +70,45 @@
     
     ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
     if (author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied) {
-        // 判断没有权限获取用户相册的话，就提示个View
-        UIImageView *lockView = [[UIImageView alloc] init];
-        lockView.image = [UIImage imageNamed:@"lock.png"];
-        lockView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 200);
-        lockView.contentMode = UIViewContentModeCenter;
-        [self.view addSubview:lockView];
-        
-        UILabel *lockLbl = [[UILabel alloc] init];
-        lockLbl.text = PICKER_PowerBrowserPhotoLibirayText;
-        lockLbl.numberOfLines = 0;
-        lockLbl.textAlignment = NSTextAlignmentCenter;
-        lockLbl.frame = CGRectMake(20, 0, self.view.frame.size.width - 40, self.view.frame.size.height);
-        [self.view addSubview:lockLbl];
-    } else {
+        UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"" message:@"请前往手机系统设置，允许惠小微访问相册权限" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+            if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                [[UIApplication sharedApplication] openURL:url options:nil completionHandler:nil];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+        }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [alertCtrl addAction:cancelAction];
+        [alertCtrl addAction:defaultAction];
+        [self presentViewController:alertCtrl animated:YES completion:nil];
+    } else if (author == ALAuthorizationStatusNotDetermined){
+        //        NSLog(@"1123");
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            if (status == PHAuthorizationStatusAuthorized) {
+                [self tableView];
+                // 获取图片
+                [self getImgs];
+            } else {
+                UIAlertController *alertCtrl = [UIAlertController alertControllerWithTitle:@"" message:@"请前往手机系统设置，允许惠小微访问相册权限" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+                        [[UIApplication sharedApplication] openURL:url options:nil completionHandler:nil];
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    }
+                }];
+                UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }];
+                [alertCtrl addAction:cancelAction];
+                [alertCtrl addAction:defaultAction];
+                [self presentViewController:alertCtrl animated:YES completion:nil];
+            }
+        }];
+    }else{
         [self tableView];
         // 获取图片
         [self getImgs];

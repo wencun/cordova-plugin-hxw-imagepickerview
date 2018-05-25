@@ -51,8 +51,10 @@
 - (UIImageView *)tickImageView {
     if (!_tickImageView) {
         UIImageView *tickImageView = [[UIImageView alloc] init];
-        tickImageView.frame = CGRectMake(self.bounds.size.width - 28, 5, 21, 21);
-        tickImageView.image = [UIImage imageNamed:@"checkbox_pic_non"];
+//        tickImageView.frame = CGRectMake(self.bounds.size.width - 28, 5, 21, 21);
+        tickImageView.frame = self.bounds;//CGRectMake(self.bounds.size.width, self.bounds.size.height, 21, 21);
+
+//        tickImageView.image = [UIImage imageNamed:@"checkbox_pic_non"];
         [self addSubview:tickImageView];
         self.tickImageView = tickImageView;
     }
@@ -66,13 +68,14 @@
 
 - (void)setMaskViewFlag:(BOOL)maskViewFlag {
     _maskViewFlag = maskViewFlag;
-    
-    if (!maskViewFlag) {
-        // hidden
-        [self.tickImageView setImage:[UIImage imageNamed:@"checkbox_pic_non"]];
-    }else{
-        [self.tickImageView setImage:[UIImage imageNamed:@"checkbox_pic"]];
-    }
+    [self.tickImageView setImage:nil];
+
+//    if (!maskViewFlag) {
+//        // hidden
+//        [self.tickImageView setImage:[UIImage imageNamed:@"checkbox_pic_non"]];
+//    }else{
+//        [self.tickImageView setImage:[UIImage imageNamed:@"checkbox_pic"]];
+//    }
     self.animationRightTick = maskViewFlag;
 }
 

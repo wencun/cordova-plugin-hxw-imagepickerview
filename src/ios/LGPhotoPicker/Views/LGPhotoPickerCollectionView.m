@@ -111,7 +111,7 @@
         tickButton = cell.contentView.subviews[1];
     } else {
         tickButton = [[UIButton alloc] init];
-        tickButton.frame = CGRectMake(cell.frame.size.width - 40, 0, 40, 40);
+        tickButton.frame = cell.bounds;//CGRectMake(cell.frame.size.width - 40, 0, 40, 40);
         [tickButton setBackgroundColor:[UIColor clearColor]];
         [cell.contentView addSubview:tickButton];
         [tickButton addTarget:self action:@selector(tickBtnTouched:) forControlEvents:UIControlEventTouchUpInside];

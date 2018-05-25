@@ -2,7 +2,7 @@
 
 #import <Cordova/CDV.h>
 #import "LGPhoto.h"
-#import "SVProgressHUD.h"
+//#import "SVProgressHUD.h"
 #define HEADER_HEIGHT 100
 
 @interface HXWImagePickerView : CDVPlugin <LGPhotoPickerViewControllerDelegate> {
@@ -75,7 +75,7 @@
 #pragma mark - LGPhotoPickerViewControllerDelegate
 
 - (void)pickerViewControllerDoneAsstes:(NSArray *)assets isOriginal:(BOOL)original{
-    [SVProgressHUD showInfoWithStatus:@"图片正在处理中..."];
+//    [SVProgressHUD showInfoWithStatus:@"图片正在处理中..."];
     /*
      //assets的元素是LGPhotoAssets对象，获取image方法如下:
      NSMutableArray *thumbImageArray = [NSMutableArray array];
@@ -103,7 +103,7 @@
     [_resultDict setObject:imageKeyArray forKey:@"imgUuid"];
     [_resultDict setObject:imagePathArray forKey:@"imgPath"];
     [self successCallBack:_resultDict];
-    [SVProgressHUD dismiss];
+//    [SVProgressHUD dismiss];
     [self didCancel];
     
 }

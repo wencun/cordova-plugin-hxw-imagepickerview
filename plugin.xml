@@ -13,10 +13,10 @@
 		</config-file>
 		
 		<config-file target="*-Info.plist" parent="NSCameraUsageDescription">
-			<string>是否允许此APP使用相机？</string>
+			<string>我们需要访问您的相机，用于活体检测、拍摄身份证等操作</string>
 		</config-file>
         <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
-            <string>是否允许此APP使用相相册？</string>
+            <string>我们需要访问您的相册，以方便您上传凭证</string>
         </config-file>
 
 		<config-file target="*-Info.plist" parent="CFBundleDevelopmentRegion">
@@ -82,16 +82,16 @@
         <resource-file src="src/ios/image/checkbox_pic2@2x.png" target="/" />
         
         <!-- SVProgressHUD start -->
-        <header-file src="src/ios/SVProgressHUD/SVIndefiniteAnimatedView.h"/>
-        <source-file src="src/ios/SVProgressHUD/SVIndefiniteAnimatedView.m"/>
-        <header-file src="src/ios/SVProgressHUD/SVProgressAnimatedView.h"/>
-        <source-file src="src/ios/SVProgressHUD/SVProgressAnimatedView.m"/>
-        <header-file src="src/ios/SVProgressHUD/SVProgressHUD.h"/>
-        <source-file src="src/ios/SVProgressHUD/SVProgressHUD.m"/>
-        <header-file src="src/ios/SVProgressHUD/SVRadialGradientLayer.h"/>
-        <source-file src="src/ios/SVProgressHUD/SVRadialGradientLayer.m"/>
-        <header-file src="src/ios/SVProgressHUD/SVProgressHUD-Prefix.pch"/>
-        <resource-file src="src/ios/SVProgressHUD/SVProgressHUD.bundle" target="/" />
+<!--        <header-file src="src/ios/SVProgressHUD/SVIndefiniteAnimatedView.h"/>-->
+<!--        <source-file src="src/ios/SVProgressHUD/SVIndefiniteAnimatedView.m"/>-->
+<!--        <header-file src="src/ios/SVProgressHUD/SVProgressAnimatedView.h"/>-->
+<!--        <source-file src="src/ios/SVProgressHUD/SVProgressAnimatedView.m"/>-->
+<!--        <header-file src="src/ios/SVProgressHUD/SVProgressHUD.h"/>-->
+<!--        <source-file src="src/ios/SVProgressHUD/SVProgressHUD.m"/>-->
+<!--        <header-file src="src/ios/SVProgressHUD/SVRadialGradientLayer.h"/>-->
+<!--        <source-file src="src/ios/SVProgressHUD/SVRadialGradientLayer.m"/>-->
+<!--        <header-file src="src/ios/SVProgressHUD/SVProgressHUD-Prefix.pch"/>-->
+<!--        <resource-file src="src/ios/SVProgressHUD/SVProgressHUD.bundle" target="/" />-->
         <!-- SVProgressHUD end -->
         
         
